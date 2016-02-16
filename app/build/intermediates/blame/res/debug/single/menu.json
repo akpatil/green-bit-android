@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/home/icarus/AndroidStudioProjects/GreenBit/app/build/intermediates/res/merged/debug/menu/main.xml",
+        "source": "/home/icarus/AndroidStudioProjects/GreenBit/app/src/main/res/menu/main.xml"
+    },
+    {
+        "merged": "/home/icarus/AndroidStudioProjects/GreenBit/app/build/intermediates/res/merged/debug/menu/drawer.xml",
+        "source": "/home/icarus/AndroidStudioProjects/GreenBit/app/src/main/res/menu/drawer.xml"
+    }
+]

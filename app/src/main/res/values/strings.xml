@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="action_settings">Settings</string>
+
+    <!-- MainActivity User SignIn -->
+    <string name="app_name">GreenBit</string>
+    <string name="username">Username:</string>
+    <string name="password">Password:</string>
+    <string name="loginButton">Login</string>
+    
+    <!-- UserActivity User Op -->
+    <string name="activity_user">UserOp</string>
+</resources>

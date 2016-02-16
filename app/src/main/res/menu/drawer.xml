@@ -1,0 +1,33 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        
+        <item
+            android:id="@+id/home" 
+            android:title="Home"
+            android:checked="false"
+            android:icon="@drawable/ic_home">
+        </item>
+        
+        <item
+            android:id="@+id/article" 
+            android:title="Article"
+            android:checked="false"
+            android:icon="@drawable/ic_collections">
+        </item>
+        
+        <item 
+            android:id="@+id/user_options"
+            android:title="User Options"
+            android:checked="false"
+            android:icon="@drawable/ic_perm_identity">
+        </item>
+        
+        <item 
+            android:id="@+id/logout"
+            android:title="Logout"
+            android:checked="false"
+            android:icon="@drawable/ic_power_settings">
+        </item>
+        
+    </group>
+</menu>

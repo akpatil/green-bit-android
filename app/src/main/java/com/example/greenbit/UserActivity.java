@@ -19,6 +19,7 @@ import android.os.TransactionTooLargeException;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.NavigationView.OnNavigationItemSelectedListener;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -38,21 +39,22 @@ public class UserActivity extends AppCompatActivity implements RecyclerViewListe
 	private OnNavigationItemSelectedListener mItemListener;
 	private SharedPreferences mSharedPreferences;
 	private Fragment fragment = null;
-	
+	private ActionBar mActionBar;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_user);
 		initialization();
-		
+
 		DisplayView(R.id.home);
 		FragmentTransaction transaction = getFragmentManager().beginTransaction();
 		transaction.replace(R.id.frameLayout, fragment).commit();
-        
+
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-		
+		getSupportActionBar().setHomeButtonEnabled(true);
+
 		mDrawerToggle = new ActionBarDrawerToggle(UserActivity.this, mDrawerLayout, R.string.activity_user, R.string.activity_user){
 
 			@Override
@@ -80,11 +82,11 @@ public class UserActivity extends AppCompatActivity implements RecyclerViewListe
 				// TODO Auto-generated method stub
 				super.onDrawerStateChanged(newState);
 			}
-			
+
 		};
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
 		mDrawerToggle.syncState();
-		
+
 		mNavigationView.setNavigationItemSelectedListener(OnItemClickEvent(mItemListener));
 	}
 
@@ -93,10 +95,10 @@ public class UserActivity extends AppCompatActivity implements RecyclerViewListe
 		mNavigationView = (NavigationView) findViewById(R.id.navigationView);
 		mSharedPreferences = UserActivity.this.getSharedPreferences("UserPrefs", Context.MODE_APPEND);
 	}
-	
+
 	private OnNavigationItemSelectedListener OnItemClickEvent(OnNavigationItemSelectedListener listener){
 		listener = new OnNavigationItemSelectedListener() {
-			
+
 			@Override
 			public boolean onNavigationItemSelected(MenuItem mItem) {
 				// TODO Auto-generated method stub
@@ -104,11 +106,11 @@ public class UserActivity extends AppCompatActivity implements RecyclerViewListe
 					mItem.setChecked(false);
 				else
 					mItem.setChecked(true);
-				
+
 				mDrawerLayout.closeDrawers();
-				
+
 				DisplayView(mItem.getItemId());
-				
+
 				if(fragment != null){
 					FragmentTransaction transaction = getFragmentManager().beginTransaction();
 					transaction.replace(R.id.frameLayout, fragment).commit();
@@ -117,40 +119,49 @@ public class UserActivity extends AppCompatActivity implements RecyclerViewListe
 				return false;
 			}
 		};
-		
+
 		return listener;
 	}
-	
+
 	private void DisplayView(int resource){
 		switch (resource) {
-		case R.id.home:
-			fragment = new HomeFragment();
-			break;
-		
-		case R.id.article:
-			fragment = new ArticleListFragment();
-			break;
+			case R.id.home:
+				fragment = new HomeFragment();
+				break;
 
-		case R.id.logout:
-			Intent intent = new Intent(UserActivity.this, MainActivity.class);
-			SharedPreferences.Editor mEditor = mSharedPreferences.edit();
-			mEditor.putString("login", null);
-			mEditor.commit();
-			startActivity(intent);
-			break;
-			
-		default:
-			break;
+			case R.id.article:
+				fragment = new ArticleListFragment();
+				break;
+
+			case R.id.logout:
+				Intent intent = new Intent(UserActivity.this, MainActivity.class);
+				SharedPreferences.Editor mEditor = mSharedPreferences.edit();
+				mEditor.putString("login", null);
+				mEditor.commit();
+				startActivity(intent);
+				break;
+
+			default:
+				break;
 		}
 	}
+
+	/* private void InflateCustomActionBar(){
+		mActionBar = getSupportActionBar();
+		mActionBar.setDisplayShowHomeEnabled(false);
+		LayoutInflater inflater = LayoutInflater.from(this);
+		View view = inflater.inflate(R.layout.actionbar, null);
+		mActionBar.setCustomView(view);
+		mActionBar.setDisplayShowCustomEnabled(true);
+	} */
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// TODO Auto-generated method stub
 		if (mDrawerToggle.onOptionsItemSelected(item)) {
-		      return true;
-		    }
-		
+			return true;
+		}
+
 		return super.onOptionsItemSelected(item);
 	}
 
@@ -159,7 +170,7 @@ public class UserActivity extends AppCompatActivity implements RecyclerViewListe
 		// TODO Auto-generated method stub
 		System.out.println("View: "+v+"Pos: "+pos+"ArrayList: "+list);
 		ArticleItem item = list.get(pos);
-		CardExpandFragment mCardFragment = new CardExpandFragment(item.getTitle(), item.getContent(), item.getCreated());
+		CardExpandFragment mCardFragment = new CardExpandFragment(item.getTitle(), item.getContent(), item.getCreated(), item.getCreator());
 		FragmentTransaction transaction = getFragmentManager().beginTransaction();
 		transaction.replace(R.id.frameLayout, mCardFragment).commit();
 	}

@@ -3,15 +3,25 @@ package com.example.object;
 public class ArticleItem {
 
 	private String mTitle,
-				   mContent,
-				   mCreated;
-	
+			mContent,
+			mCreated,
+			mCreator;
+
 	public ArticleItem(){}
-	
-	public ArticleItem(String title, String content, String created){
+
+	public ArticleItem(String title, String content, String created, String creator){
 		this.mTitle = title;
 		this.mContent = content;
 		this.mCreated = created;
+		this.mCreator = creator;
+	}
+
+	public String getCreator() {
+		return mCreator;
+	}
+
+	public void setCreator(String mCreator) {
+		this.mCreator = mCreator;
 	}
 
 	public String getTitle() {
@@ -37,5 +47,5 @@ public class ArticleItem {
 	public void setCreated(String mCreated) {
 		this.mCreated = mCreated;
 	}
-	
+
 }

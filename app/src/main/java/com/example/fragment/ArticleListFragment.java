@@ -17,6 +17,9 @@ import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -31,20 +34,24 @@ public class ArticleListFragment extends Fragment implements VolleyGetArrayRespo
 	private RecyclerView mRecyclerView;
 	private AdapterRecyclerArticle mAdapter;
 	private static ProgressDialog mProgressDialog;
-	
+	private SwipeRefreshLayout mRefreshLayout;
+	private OnRefreshListener refreshListener;
+	private CollapsingToolbarLayout mCollapsingToolbar;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		View view = inflater.inflate(R.layout.fragment_article_list, null);
 		initialization(view);
 		PopulateData(view);
-		
+
 		return view;
 	}
-	
+
 	private void initialization(View view){
 		mUrl = "http://10.0.2.2:3000/api/article";
 		mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+		mRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
 	}
 
 	private void PopulateData(View view){
@@ -53,7 +60,22 @@ public class ArticleListFragment extends Fragment implements VolleyGetArrayRespo
 		ProgressDialog(getActivity());
 		mVolleyGetService.fetchGetData();
 	}
-	
+
+	private OnRefreshListener OnRefreshEvent(OnRefreshListener listener){
+		listener = new OnRefreshListener() {
+
+			@Override
+			public void onRefresh() {
+				// TODO Auto-generated method stub
+				mVolleyGetService = new VolleyGetArrayService(getActivity(), mUrl);
+				mVolleyGetService.setTargetFragment(ArticleListFragment.this, 1);
+				mVolleyGetService.fetchGetData();
+			}
+		};
+
+		return listener;
+	}
+
 	private static void ProgressDialog(Context mContext){
 		mProgressDialog = new ProgressDialog(mContext);
 		mProgressDialog.setCancelable(true);
@@ -65,12 +87,14 @@ public class ArticleListFragment extends Fragment implements VolleyGetArrayRespo
 	public void onGetArrayResponse(JSONArray response) {
 		// TODO Auto-generated method stub
 		ArrayList<ArticleItem> mArticleList = new ArrayList<ArticleItem>();
-		
+
 		mJsonService = new ParseJsonDataService();
 		mArticleList = mJsonService.ParseJsonArticle(response);
 		mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 		mAdapter = new AdapterRecyclerArticle(getActivity(), mArticleList);
 		mRecyclerView.setAdapter(mAdapter);
+		mRefreshLayout.setOnRefreshListener(OnRefreshEvent(refreshListener));
 		mProgressDialog.dismiss();
+		mRefreshLayout.setRefreshing(false);
 	}
 }

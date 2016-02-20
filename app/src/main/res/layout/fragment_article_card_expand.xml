@@ -1,33 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/White">
-    
-    <TextView
-    	    android:id="@+id/textViewTitle"
-    	    android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:textColor="@color/Black"
-	        android:textSize="25dp"
-	        android:textStyle="bold"
-	        android:gravity="center_horizontal" />
-    	
-    	<TextView
-    	    android:id="@+id/textViewCreated"
-    	    android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:textSize="10dp"
-	        android:gravity="center_horizontal"
-	        android:textColor="@color/Gray" />
-    	
-    	<TextView
-    	    android:id="@+id/textViewContent"
-    	    android:layout_width="fill_parent"
-	        android:layout_height="fill_parent"
-	        android:textSize="15dp"
-	        android:textColor="@color/DarkSlateBlue" />
-    
-</LinearLayout>
+<android.support.design.widget.CoordinatorLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@color/White">
+
+	<android.support.design.widget.AppBarLayout
+		android:layout_width="match_parent"
+		android:layout_height="300dp"
+		android:background="@drawable/collapsingtoolbarimg2">
+
+		<android.support.design.widget.CollapsingToolbarLayout
+			android:id="@+id/collapsingToolbar"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			app:contentScrim="@color/SteelBlue"
+			app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+			<android.support.v7.widget.Toolbar
+				android:id="@+id/toolBar"
+				android:layout_width="match_parent"
+				android:layout_height="?attr/actionBarSize"
+				android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+				app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+				app:layout_collapseMode="pin" />
+
+		</android.support.design.widget.CollapsingToolbarLayout>
+
+	</android.support.design.widget.AppBarLayout>
+
+	<android.support.v4.widget.NestedScrollView
+		android:id="@+id/scroll"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:clipToPadding="false"
+		app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+		<LinearLayout
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:orientation="vertical"
+			android:layout_marginTop="20dp"
+			android:layout_marginBottom="20dp">
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:textSize="22dp"
+				android:text="Created By:"
+				android:gravity="center_horizontal"
+				android:textColor="@color/material_grey_900" />
+
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:id="@+id/textViewCreator"
+				android:textSize="14dp"
+				android:gravity="center_horizontal"
+				android:textColor="@color/material_grey_800" />
+
+			<TextView
+				android:id="@+id/textViewCreated"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:textSize="13dp"
+				android:gravity="center"
+				android:textColor="@color/material_grey_600"
+				android:layout_marginBottom="10dp" />
+
+			<TextView
+				android:id="@+id/textViewContent"
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent"
+				android:textSize="15dp"
+				android:textColor="@color/DarkSlateBlue" />
+
+		</LinearLayout>
+
+	</android.support.v4.widget.NestedScrollView>
+
+</android.support.design.widget.CoordinatorLayout>
+
+
